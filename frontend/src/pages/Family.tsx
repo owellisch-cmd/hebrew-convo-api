@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { api } from "../api/client";
-import type { FamilyMember } from "../types";
+import type { FamilyMember, PathwayOption } from "../types";
 
 const emptyMember = {
   name: "",
@@ -20,6 +20,7 @@ export default function Family() {
   const [newMember, setNewMember] = useState(emptyMember);
   const [showAddForm, setShowAddForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pathways, setPathways] = useState<PathwayOption[]>([]);
 
   async function loadMembers() {
     const { data } = await api.get<FamilyMember[]>("/family");
@@ -29,6 +30,10 @@ export default function Family() {
 
   useEffect(() => {
     loadMembers();
+    api
+      .get<PathwayOption[]>("/pathways")
+      .then(({ data }) => setPathways(data))
+      .catch(() => setPathways([]));
   }, []);
 
   async function addMember(e: FormEvent) {
@@ -108,6 +113,7 @@ export default function Family() {
         <MemberCard
           key={member.id}
           member={member}
+          pathways={pathways}
           onDelete={() => deleteMember(member.id)}
           onUsageChange={(field, value) => updateUsage(member, field, value)}
           onAddCondition={(name) => addCondition(member.id, name)}
@@ -172,6 +178,7 @@ export default function Family() {
 
 function MemberCard({
   member,
+  pathways,
   onDelete,
   onUsageChange,
   onAddCondition,
@@ -180,6 +187,7 @@ function MemberCard({
   onRemoveMedication,
 }: {
   member: FamilyMember;
+  pathways: PathwayOption[];
   onDelete: () => void;
   onUsageChange: (field: string, value: number) => void;
   onAddCondition: (name: string) => void;
@@ -218,10 +226,18 @@ function MemberCard({
         ))}
         <div className="inline-form" style={{ marginTop: "0.5rem" }}>
           <input
-            placeholder="e.g. Type 2 diabetes"
+            list={`pathways-${member.id}`}
+            placeholder="e.g. Chronic low back pain"
             value={conditionInput}
             onChange={(e) => setConditionInput(e.target.value)}
           />
+          <datalist id={`pathways-${member.id}`}>
+            {pathways.map((p) => (
+              <option key={p.id} value={p.name}>
+                {p.category}
+              </option>
+            ))}
+          </datalist>
           <button
             type="button"
             className="secondary"
@@ -233,6 +249,13 @@ function MemberCard({
             Add
           </button>
         </div>
+        {pathways.length > 0 && (
+          <div className="muted" style={{ fontSize: "0.8rem", marginTop: "0.35rem" }}>
+            Conditions with a modeled care pathway are suggested as you type. Picking one lets
+            the recommendation check whether each plan can actually deliver that care — not just
+            what it costs.
+          </div>
+        )}
       </div>
 
       <div style={{ marginTop: "0.75rem" }}>

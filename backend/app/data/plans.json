@@ -11,12 +11,28 @@
     "uses_copays": true,
     "primary_care_copay": 25,
     "specialist_copay": 40,
+    "therapy_copay": 30,
     "er_copay": 250,
     "generic_rx_copay": 10,
     "brand_rx_copay": 40,
+    "specialty_rx_coinsurance": 0.30,
     "requires_referral": true,
     "out_of_network_coverage": false,
-    "notes": "Lowest premium. Requires a referral from your primary care doctor to see specialists. No coverage if you go outside the plan's network."
+    "notes": "Lowest premium. Requires a referral from your primary care doctor to see specialists. No coverage if you go outside the plan's network.",
+    "access": {
+      "visit_caps": { "physical_therapy": 20, "occupational_therapy": 20, "chiropractic": 12 },
+      "prior_auth": ["advanced_imaging", "interventional_pain", "specialty_drug", "surgery"],
+      "step_therapy": ["interventional_pain", "specialty_drug"],
+      "specialty_network": {
+        "pain_medicine": "limited",
+        "orthopedics": "adequate",
+        "neurology": "limited"
+      },
+      "formulary": {
+        "non_opioid_analgesic": { "covered": true, "tier": "generic" },
+        "specialty_biologic": { "covered": false, "tier": "not_covered" }
+      }
+    }
   },
   {
     "id": "epo-standard",
@@ -30,12 +46,28 @@
     "uses_copays": true,
     "primary_care_copay": 30,
     "specialist_copay": 50,
+    "therapy_copay": 40,
     "er_copay": 300,
     "generic_rx_copay": 15,
     "brand_rx_copay": 50,
+    "specialty_rx_coinsurance": 0.25,
     "requires_referral": false,
     "out_of_network_coverage": false,
-    "notes": "No referrals needed to see specialists, but like an HMO, there is no coverage outside the plan's network."
+    "notes": "No referrals needed to see specialists, but like an HMO, there is no coverage outside the plan's network.",
+    "access": {
+      "visit_caps": { "physical_therapy": 30, "occupational_therapy": 30, "chiropractic": 20 },
+      "prior_auth": ["advanced_imaging", "specialty_drug", "surgery"],
+      "step_therapy": ["specialty_drug"],
+      "specialty_network": {
+        "pain_medicine": "adequate",
+        "orthopedics": "adequate",
+        "neurology": "adequate"
+      },
+      "formulary": {
+        "non_opioid_analgesic": { "covered": true, "tier": "generic" },
+        "specialty_biologic": { "covered": true, "tier": "specialty" }
+      }
+    }
   },
   {
     "id": "ppo-plus",
@@ -49,12 +81,28 @@
     "uses_copays": true,
     "primary_care_copay": 35,
     "specialist_copay": 60,
+    "therapy_copay": 45,
     "er_copay": 350,
     "generic_rx_copay": 15,
     "brand_rx_copay": 60,
+    "specialty_rx_coinsurance": 0.20,
     "requires_referral": false,
     "out_of_network_coverage": true,
-    "notes": "Highest premium, but you can see any provider, in or out of network, without a referral. Best if you value flexibility or already have out-of-network specialists."
+    "notes": "Highest premium, but you can see any provider, in or out of network, without a referral. Best if you value flexibility or already have out-of-network specialists.",
+    "access": {
+      "visit_caps": { "physical_therapy": 60, "occupational_therapy": 60, "chiropractic": 30 },
+      "prior_auth": ["interventional_pain", "specialty_drug"],
+      "step_therapy": [],
+      "specialty_network": {
+        "pain_medicine": "adequate",
+        "orthopedics": "adequate",
+        "neurology": "adequate"
+      },
+      "formulary": {
+        "non_opioid_analgesic": { "covered": true, "tier": "generic" },
+        "specialty_biologic": { "covered": true, "tier": "specialty" }
+      }
+    }
   },
   {
     "id": "hdhp-hsa",
@@ -68,11 +116,27 @@
     "uses_copays": false,
     "primary_care_copay": null,
     "specialist_copay": null,
+    "therapy_copay": null,
     "er_copay": null,
     "generic_rx_copay": null,
     "brand_rx_copay": null,
+    "specialty_rx_coinsurance": 0.10,
     "requires_referral": false,
     "out_of_network_coverage": true,
-    "notes": "Low premium and HSA-eligible (pre-tax savings for medical costs), but you pay full cost for care until you hit the $6,000 family deductible. Best for healthy families who rarely need care and want to bank HSA savings."
+    "notes": "Low premium and HSA-eligible (pre-tax savings for medical costs), but you pay full cost for care until you hit the $6,000 family deductible. Best for healthy families who rarely need care and want to bank HSA savings.",
+    "access": {
+      "visit_caps": { "physical_therapy": 25, "occupational_therapy": 25, "chiropractic": 12 },
+      "prior_auth": ["advanced_imaging", "interventional_pain", "specialty_drug", "surgery"],
+      "step_therapy": ["specialty_drug"],
+      "specialty_network": {
+        "pain_medicine": "adequate",
+        "orthopedics": "adequate",
+        "neurology": "adequate"
+      },
+      "formulary": {
+        "non_opioid_analgesic": { "covered": true, "tier": "generic" },
+        "specialty_biologic": { "covered": true, "tier": "specialty" }
+      }
+    }
   }
 ]

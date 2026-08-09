@@ -61,9 +61,232 @@ a {
 
 .brand {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   text-decoration: none;
   color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-accent {
+  color: var(--primary);
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background: #17594a;
+}
+
+.btn-sm {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+.btn-ghost {
+  display: inline-block;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.7rem 1.1rem;
+}
+
+/* ---- landing page ---- */
+.landing {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 0 3.5rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: 2.6rem;
+  line-height: 1.15;
+  margin: 0 0 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #4b5563;
+  max-width: 620px;
+  margin: 0 auto 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.landing section {
+  margin-bottom: 3.5rem;
+}
+
+.landing h2 {
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.landing p {
+  line-height: 1.65;
+  color: #4b5563;
+}
+
+.compare-strip {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  margin: 1.75rem 0 0.75rem;
+  flex-wrap: wrap;
+}
+
+.compare-col {
+  flex: 1 1 250px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  background: var(--panel);
+}
+
+.compare-col.highlight {
+  border-color: #bfe0d3;
+  background: var(--recommended-bg);
+}
+
+.compare-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.compare-figure {
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.compare-col.highlight .compare-figure {
+  color: var(--primary);
+}
+
+.compare-note {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #4b5563;
+}
+
+.compare-arrow {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  color: var(--muted);
+}
+
+.compare-caption {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.step-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.step {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  background: var(--panel);
+}
+
+.step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.step h3 {
+  font-size: 1.02rem;
+  margin: 0 0 0.4rem;
+}
+
+.step p {
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.barrier-list {
+  padding-left: 1.1rem;
+  margin-top: 1rem;
+}
+
+.barrier-list li {
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 0.85rem;
+}
+
+.cta-band {
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+}
+
+.cta-band h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+  .compare-arrow {
+    display: none;
+  }
 }
 
 .card {
@@ -225,4 +448,85 @@ td {
 
 .section-title {
   margin-bottom: 0.25rem;
+}
+
+/* ---- clinical access ---- */
+.access-score {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 0.15rem 0.5rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.access-good {
+  background: #e3f5ec;
+  color: #14684f;
+}
+.access-fair {
+  background: #fdf3e0;
+  color: #8a5a12;
+}
+.access-poor {
+  background: #fdeceb;
+  color: #a3231b;
+}
+
+.finding {
+  border-left: 3px solid var(--border);
+  padding: 0.5rem 0 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.finding-blocking {
+  border-left-color: #b3261e;
+}
+.finding-high {
+  border-left-color: #d97706;
+}
+.finding-medium {
+  border-left-color: #b8a13a;
+}
+.finding-low {
+  border-left-color: #9aa5b1;
+}
+
+.severity-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.finding-blocking .severity-label {
+  color: #b3261e;
+}
+.finding-high .severity-label {
+  color: #b45309;
+}
+.finding-medium .severity-label {
+  color: #8a7420;
+}
+.finding-low .severity-label {
+  color: #6b7280;
+}
+
+.alert-banner {
+  background: #fdeceb;
+  border: 1px solid #f3c0bc;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.pathway-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.disclaimer {
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  margin-top: 1rem;
 }

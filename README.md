@@ -1,4 +1,4 @@
-# Health Insurance Advisor
+# PlanWise
 
 Helps employees pick between HMO/EPO/PPO health insurance options for
 themselves and their family based on their financial situation and expected
@@ -6,6 +6,32 @@ medical usage, instead of guessing. Employees enter their family and medical
 history (or upload past expense data), and the app runs a transparent
 cost simulation across the available plans, recommends one, and explains why
 in plain English.
+
+## The differentiator: clinical access, not just cost
+
+Most benefits decision-support tools compare premiums, deductibles and copays.
+That math misses what actually drains a family with an ongoing condition: **the
+care the plan doesn't cover.**
+
+When a reported condition matches a modeled **care pathway** (see
+`backend/app/data/care_pathways.json`), every plan is checked against the care
+that condition actually requires — visit caps, prior authorization, step
+therapy, in-network specialist availability, and formulary placement. Care
+beyond a visit cap or off formulary is billed at full price **and does not count
+toward the deductible or out-of-pocket maximum**, which is exactly how a
+low-premium plan becomes the most expensive one.
+
+A worked example from the seeded data (chronic migraine):
+
+| | HMO Basic | PPO High-Deductible |
+|---|---|---|
+| Premium + copay math | **$8,160** | $11,751 |
+| Care the plan doesn't cover | $7,800 | $0 |
+| **True annual cost** | **$15,960** | **$11,751** |
+| Care access score | 11/100 (blocks care) | 58/100 |
+
+The CGRP preventive isn't on HMO Basic's formulary. A cost-only calculator
+ranks it first; PlanWise ranks it last.
 
 ## What it does
 
@@ -21,6 +47,9 @@ in plain English.
   expected cost, a best case, and a worst case (a large unplanned medical
   event) per plan — so the tradeoff between a cheap plan and a protective one
   is visible, not hidden.
+- **Care-pathway modeling** — a reported condition maps to a modeled year of
+  clinical care, and each plan is scored on whether it can actually deliver it
+  (see above). Barriers are surfaced individually with severity and dollar cost.
 - **Plain-English recommendation** — Claude (`claude-opus-5`) turns the
   numbers into a short explanation of why the recommended plan fits this
   family. Falls back to a templated explanation if no API key is configured.
@@ -52,7 +81,21 @@ in plain English.
 - **CSV/PDF parsing is a heuristic**, not a certified claims parser. It
   looks for an "amount" column (or the first dollar-looking value on each
   line of a PDF) and guesses a category from keywords. Always sanity-check
-  what got extracted on the Medical Expenses page.
+  what got extracted on the Medical Expenses page. Known limitation: a printed
+  "TOTAL" row in a bill is counted as another line item, inflating the sum.
+- **Care pathways are illustrative, not clinical guidance.** Service
+  quantities and unit costs in `care_pathways.json` are planning estimates for
+  cost modeling — not treatment recommendations, not patient-specific, and not
+  a substitute for a clinician's judgment. Replace with your own clinical and
+  actuarial inputs before any real use.
+- **The access-vs-cost tradeoff is a policy choice, not a derived value.** The
+  thresholds in `recommendation.py` (`ACCESS_CONCERN_THRESHOLD`,
+  `MATERIAL_ACCESS_GAIN`, `MAX_PREMIUM_FOR_ACCESS`) encode a judgment about how
+  much extra premium is worth paying for reliable access. Tune them per employer.
+- **Plan access attributes are hand-authored.** Real visit caps, prior-auth
+  lists, formulary tiers and network adequacy would need to come from plan
+  documents, formulary files, and provider directories — that data plumbing is
+  the hard part of productionizing this, not the algorithm.
 
 ## Architecture
 
@@ -64,9 +107,11 @@ backend/   FastAPI + SQLAlchemy (SQLite by default) + JWT auth
     routers/              auth, family, expenses, plans, recommend
     services/
       parsing.py          CSV/PDF expense parser
-      recommendation.py    cost simulation engine
+      pathways.py          condition -> care pathway matching + access scoring
+      recommendation.py    cost simulation engine (access-aware)
       llm.py                Claude explanation (claude-opus-5)
-    data/plans.json       sample plan definitions — replace with real ones
+    data/plans.json          sample plans + access attributes
+    data/care_pathways.json  modeled care pathways per condition
 
 frontend/  React + TypeScript + Vite
   src/

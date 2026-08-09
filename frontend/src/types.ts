@@ -53,6 +53,17 @@ export interface ExpenseSummary {
   total: number;
 }
 
+export type AccessSeverity = "blocking" | "high" | "medium" | "low";
+
+export interface AccessFinding {
+  severity: AccessSeverity;
+  type: string;
+  service_name: string;
+  pathway_name: string;
+  message: string;
+  uncovered_cost: number;
+}
+
 export interface PlanCost {
   plan_id: string;
   plan_name: string;
@@ -66,6 +77,35 @@ export interface PlanCost {
   notes: string;
   requires_referral: boolean;
   out_of_network_coverage: boolean;
+  access_score: number;
+  access_findings: AccessFinding[];
+  access_gap_cost: number;
+  has_blocking_barrier: boolean;
+  access_adjusted_total_cost: number;
+}
+
+export interface PathwayService {
+  name: string;
+  service_type: string;
+  annual_quantity: number;
+  unit_cost: number;
+  clinical_note?: string | null;
+}
+
+export interface MatchedPathway {
+  id: string;
+  name: string;
+  category: string;
+  summary: string;
+  matched_from: string;
+  services: PathwayService[];
+}
+
+export interface PathwayOption {
+  id: string;
+  name: string;
+  category: string;
+  summary: string;
 }
 
 export interface RecommendationResponse {
@@ -74,4 +114,6 @@ export interface RecommendationResponse {
   lowest_expected_cost_plan_id: string;
   best_worst_case_plan_id: string;
   explanation: string;
+  matched_pathways: MatchedPathway[];
+  projected_pathway_cost: number;
 }

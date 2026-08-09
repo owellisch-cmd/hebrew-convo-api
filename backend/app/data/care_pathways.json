@@ -1,0 +1,267 @@
+{
+  "_disclaimer": "ILLUSTRATIVE MODEL PARAMETERS - NOT CLINICAL GUIDANCE. Service quantities and unit costs are rough planning estimates used to project a typical year of care for cost/coverage modeling. They are not treatment recommendations, not patient-specific, and not a substitute for a clinician's judgment. Replace with your own actuarial and clinical inputs before any real use.",
+  "pathways": [
+    {
+      "id": "chronic_low_back_pain",
+      "name": "Chronic Low Back Pain",
+      "category": "MSK / Pain",
+      "aliases": [
+        "chronic low back pain",
+        "low back pain",
+        "back pain",
+        "lower back pain",
+        "lumbago",
+        "lumbar radiculopathy",
+        "sciatica",
+        "degenerative disc disease",
+        "herniated disc"
+      ],
+      "summary": "A typical year of guideline-oriented conservative care, escalating to interventional pain management if conservative therapy fails.",
+      "services": [
+        {
+          "id": "clbp_pcp",
+          "name": "Primary care evaluation and follow-up",
+          "service_type": "primary_care",
+          "annual_quantity": 3,
+          "unit_cost": 150,
+          "clinical_note": "Initial workup, medication management, re-assessment."
+        },
+        {
+          "id": "clbp_pt",
+          "name": "Physical therapy",
+          "service_type": "physical_therapy",
+          "annual_quantity": 24,
+          "unit_cost": 120,
+          "requires": { "visit_cap_category": "physical_therapy" },
+          "clinical_note": "First-line conservative therapy. Roughly 2x/week for 12 weeks. Visit caps are the single most common coverage barrier for this condition."
+        },
+        {
+          "id": "clbp_mri",
+          "name": "Lumbar spine MRI",
+          "service_type": "advanced_imaging",
+          "annual_quantity": 1,
+          "unit_cost": 1800,
+          "requires": { "prior_auth_category": "advanced_imaging" },
+          "clinical_note": "Indicated when red flags are present or when conservative therapy fails."
+        },
+        {
+          "id": "clbp_specialist",
+          "name": "Pain medicine specialist visits",
+          "service_type": "specialist",
+          "specialty": "pain_medicine",
+          "annual_quantity": 3,
+          "unit_cost": 300,
+          "requires": { "specialty_network": "pain_medicine", "referral": true },
+          "clinical_note": "Consultation and follow-up for escalating care."
+        },
+        {
+          "id": "clbp_esi",
+          "name": "Epidural steroid injection",
+          "service_type": "procedure",
+          "annual_quantity": 2,
+          "unit_cost": 2200,
+          "requires": {
+            "prior_auth_category": "interventional_pain",
+            "step_therapy_category": "interventional_pain"
+          },
+          "clinical_note": "Considered after conservative therapy. Frequently gated behind documented failure of physical therapy."
+        },
+        {
+          "id": "clbp_rx",
+          "name": "Non-opioid analgesic (monthly fills)",
+          "service_type": "prescription",
+          "drug_class": "non_opioid_analgesic",
+          "annual_quantity": 12,
+          "unit_cost": 65,
+          "requires": { "formulary_class": "non_opioid_analgesic" },
+          "clinical_note": "Formulary placement of non-opioid options materially affects both cost and prescribing patterns."
+        }
+      ]
+    },
+    {
+      "id": "knee_osteoarthritis",
+      "name": "Knee Osteoarthritis",
+      "category": "MSK / Pain",
+      "aliases": [
+        "knee osteoarthritis",
+        "knee arthritis",
+        "osteoarthritis",
+        "oa knee",
+        "degenerative joint disease",
+        "knee pain"
+      ],
+      "summary": "Conservative management with therapy and injections, with imaging and specialist oversight.",
+      "services": [
+        {
+          "id": "koa_pcp",
+          "name": "Primary care evaluation and follow-up",
+          "service_type": "primary_care",
+          "annual_quantity": 2,
+          "unit_cost": 150
+        },
+        {
+          "id": "koa_pt",
+          "name": "Physical therapy",
+          "service_type": "physical_therapy",
+          "annual_quantity": 18,
+          "unit_cost": 120,
+          "requires": { "visit_cap_category": "physical_therapy" },
+          "clinical_note": "Strengthening and mobility program; core of conservative management."
+        },
+        {
+          "id": "koa_xray",
+          "name": "Knee radiographs",
+          "service_type": "imaging",
+          "annual_quantity": 1,
+          "unit_cost": 280
+        },
+        {
+          "id": "koa_ortho",
+          "name": "Orthopedic specialist visits",
+          "service_type": "specialist",
+          "specialty": "orthopedics",
+          "annual_quantity": 3,
+          "unit_cost": 280,
+          "requires": { "specialty_network": "orthopedics", "referral": true }
+        },
+        {
+          "id": "koa_injection",
+          "name": "Intra-articular injection",
+          "service_type": "procedure",
+          "annual_quantity": 3,
+          "unit_cost": 700,
+          "requires": { "prior_auth_category": "interventional_pain" }
+        },
+        {
+          "id": "koa_rx",
+          "name": "NSAID / analgesic (monthly fills)",
+          "service_type": "prescription",
+          "drug_class": "non_opioid_analgesic",
+          "annual_quantity": 12,
+          "unit_cost": 40,
+          "requires": { "formulary_class": "non_opioid_analgesic" }
+        }
+      ]
+    },
+    {
+      "id": "migraine",
+      "name": "Chronic Migraine",
+      "category": "Neurology / Pain",
+      "aliases": [
+        "migraine",
+        "chronic migraine",
+        "migraines",
+        "headache",
+        "chronic headache",
+        "cluster headache"
+      ],
+      "summary": "Neurology-led management with preventive and acute pharmacotherapy, where specialty drug coverage dominates cost.",
+      "services": [
+        {
+          "id": "mig_pcp",
+          "name": "Primary care follow-up",
+          "service_type": "primary_care",
+          "annual_quantity": 2,
+          "unit_cost": 150
+        },
+        {
+          "id": "mig_neuro",
+          "name": "Neurology specialist visits",
+          "service_type": "specialist",
+          "specialty": "neurology",
+          "annual_quantity": 4,
+          "unit_cost": 320,
+          "requires": { "specialty_network": "neurology", "referral": true }
+        },
+        {
+          "id": "mig_mri",
+          "name": "Brain MRI",
+          "service_type": "advanced_imaging",
+          "annual_quantity": 1,
+          "unit_cost": 2000,
+          "requires": { "prior_auth_category": "advanced_imaging" }
+        },
+        {
+          "id": "mig_preventive",
+          "name": "CGRP preventive therapy (monthly)",
+          "service_type": "prescription",
+          "drug_class": "specialty_biologic",
+          "annual_quantity": 12,
+          "unit_cost": 650,
+          "requires": {
+            "formulary_class": "specialty_biologic",
+            "prior_auth_category": "specialty_drug",
+            "step_therapy_category": "specialty_drug"
+          },
+          "clinical_note": "Specialty tier placement and step-therapy requirements are the dominant access barrier for this condition."
+        },
+        {
+          "id": "mig_acute",
+          "name": "Acute abortive therapy (monthly fills)",
+          "service_type": "prescription",
+          "drug_class": "non_opioid_analgesic",
+          "annual_quantity": 12,
+          "unit_cost": 90,
+          "requires": { "formulary_class": "non_opioid_analgesic" }
+        }
+      ]
+    },
+    {
+      "id": "diabetic_neuropathy",
+      "name": "Diabetic Peripheral Neuropathy",
+      "category": "Neurology / Pain",
+      "aliases": [
+        "diabetic neuropathy",
+        "peripheral neuropathy",
+        "neuropathy",
+        "diabetic peripheral neuropathy",
+        "neuropathic pain",
+        "nerve pain"
+      ],
+      "summary": "Ongoing neuropathic pain management alongside diabetes care, with electrodiagnostic workup.",
+      "services": [
+        {
+          "id": "dn_pcp",
+          "name": "Primary care / endocrine follow-up",
+          "service_type": "primary_care",
+          "annual_quantity": 4,
+          "unit_cost": 150
+        },
+        {
+          "id": "dn_neuro",
+          "name": "Neurology specialist visits",
+          "service_type": "specialist",
+          "specialty": "neurology",
+          "annual_quantity": 2,
+          "unit_cost": 320,
+          "requires": { "specialty_network": "neurology", "referral": true }
+        },
+        {
+          "id": "dn_emg",
+          "name": "EMG / nerve conduction study",
+          "service_type": "procedure",
+          "annual_quantity": 1,
+          "unit_cost": 1100,
+          "requires": { "prior_auth_category": "advanced_imaging" }
+        },
+        {
+          "id": "dn_pt",
+          "name": "Physical therapy / gait and balance",
+          "service_type": "physical_therapy",
+          "annual_quantity": 12,
+          "unit_cost": 120,
+          "requires": { "visit_cap_category": "physical_therapy" }
+        },
+        {
+          "id": "dn_rx",
+          "name": "Neuropathic pain agent (monthly fills)",
+          "service_type": "prescription",
+          "drug_class": "non_opioid_analgesic",
+          "annual_quantity": 12,
+          "unit_cost": 75,
+          "requires": { "formulary_class": "non_opioid_analgesic" }
+        }
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.routers import auth, expenses, family, plans, recommend
+from app.routers import auth, expenses, family, pathways, plans, recommend
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +20,7 @@ app.include_router(auth.router)
 app.include_router(family.router)
 app.include_router(expenses.router)
 app.include_router(plans.router)
+app.include_router(pathways.router)
 app.include_router(recommend.router)
 
 

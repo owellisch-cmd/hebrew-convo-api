@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
 import { useAuth } from "./context/AuthContext";
+import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Family from "./pages/Family";
@@ -12,6 +13,12 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   if (loading) return <div className="app-shell">Loading...</div>;
   if (!user) return <Navigate to="/login" replace />;
   return children;
+}
+
+/** Logged-in users skip the marketing page and go straight to the app. */
+function Home() {
+  const { user } = useAuth();
+  return user ? <Navigate to="/family" replace /> : <Landing />;
 }
 
 export default function App() {
@@ -26,6 +33,7 @@ export default function App() {
       <Nav />
       <div className="app-shell">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
@@ -52,7 +60,7 @@ export default function App() {
               </RequireAuth>
             }
           />
-          <Route path="/" element={<Navigate to="/family" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </>

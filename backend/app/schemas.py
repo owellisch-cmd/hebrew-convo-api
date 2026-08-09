@@ -108,6 +108,15 @@ class ExpenseSummary(BaseModel):
 # ---- Recommendation ----
 
 
+class AccessFinding(BaseModel):
+    severity: str  # blocking | high | medium | low
+    type: str
+    service_name: str
+    pathway_name: str
+    message: str
+    uncovered_cost: float
+
+
 class PlanCost(BaseModel):
     plan_id: str
     plan_name: str
@@ -121,6 +130,35 @@ class PlanCost(BaseModel):
     notes: str
     requires_referral: bool
     out_of_network_coverage: bool
+    access_score: int = 100
+    access_findings: list[AccessFinding] = []
+    access_gap_cost: float = 0
+    has_blocking_barrier: bool = False
+    access_adjusted_total_cost: float = 0
+
+
+class PathwayServiceOut(BaseModel):
+    name: str
+    service_type: str
+    annual_quantity: int
+    unit_cost: float
+    clinical_note: str | None = None
+
+
+class MatchedPathway(BaseModel):
+    id: str
+    name: str
+    category: str
+    summary: str
+    matched_from: str
+    services: list[PathwayServiceOut]
+
+
+class PathwayOption(BaseModel):
+    id: str
+    name: str
+    category: str
+    summary: str
 
 
 class RecommendationResponse(BaseModel):
@@ -129,3 +167,5 @@ class RecommendationResponse(BaseModel):
     lowest_expected_cost_plan_id: str
     best_worst_case_plan_id: str
     explanation: str
+    matched_pathways: list[MatchedPathway] = []
+    projected_pathway_cost: float = 0
