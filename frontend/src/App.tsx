@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { wakeBackend } from "./api/client";
 import Nav from "./components/Nav";
 import { useAuth } from "./context/AuthContext";
 import Landing from "./pages/Landing";
@@ -23,6 +25,10 @@ function Home() {
 
 export default function App() {
   const { loading } = useAuth();
+
+  useEffect(() => {
+    wakeBackend();
+  }, []);
 
   if (loading) {
     return <div className="app-shell">Loading...</div>;
