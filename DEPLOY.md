@@ -129,6 +129,11 @@ If you use a custom domain later, add it comma-separated:
 
 ## Redeploying after changes
 
+**Shortcut:** from the repo folder on your Mac, run `./deploy.sh`. It pushes
+the current code to the `claude/health-insurance-advisor-h84pyh` branch (Render
+redeploys the backend from it) and then runs `vercel --prod` for the frontend.
+It never force-pushes. The manual equivalent:
+
 ```bash
 # backend: Render auto-deploys on push
 git add -A && git commit -m "your change" && git push
