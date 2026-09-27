@@ -1,0 +1,777 @@
+{
+  "disclaimer": "Illustrative planning inputs for a new outpatient practice, not benchmarks for any market. Salaries, reimbursement, rent and demand vary enormously by region and payer contract. Replace every number with your own local data, quotes and payer fee schedules before relying on a projection.",
+  "templates": [
+    {
+      "id": "primary_care",
+      "name": "Family / primary care",
+      "summary": "High-volume, relationship-driven practice. Revenue depends on building a large panel; payer mix and no-shows matter more than fee size.",
+      "config": {
+        "name": "Family medicine clinic",
+        "specialty": "primary_care",
+        "months": 36,
+        "open_days_per_week": 5,
+        "exam_rooms": 6,
+        "visits_per_room_per_day": 14,
+        "providers": [
+          {
+            "role": "Physician (MD/DO)",
+            "count": 2,
+            "annual_salary": 240000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 22,
+            "start_month": 1
+          },
+          {
+            "role": "Nurse practitioner",
+            "count": 1,
+            "annual_salary": 128000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 16,
+            "start_month": 4
+          },
+          {
+            "role": "Nurse practitioner",
+            "count": 1,
+            "annual_salary": 128000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 16,
+            "start_month": 10
+          }
+        ],
+        "staff": [
+          {
+            "role": "Medical assistant",
+            "count": 2,
+            "annual_salary": 42000,
+            "start_month": 1
+          },
+          {
+            "role": "Medical assistant",
+            "count": 2,
+            "annual_salary": 42000,
+            "start_month": 8
+          },
+          {
+            "role": "Front desk",
+            "count": 2,
+            "annual_salary": 39000,
+            "start_month": 1
+          },
+          {
+            "role": "Practice manager",
+            "count": 1,
+            "annual_salary": 78000,
+            "start_month": 1
+          },
+          {
+            "role": "Biller / coder",
+            "count": 1,
+            "annual_salary": 52000,
+            "start_month": 1
+          }
+        ],
+        "benefits_load_pct": 22,
+        "demand": {
+          "starting_panel": 700,
+          "new_patients_per_month": 300,
+          "ramp_months": 6,
+          "visits_per_patient_per_year": 3.0,
+          "annual_attrition_pct": 10,
+          "no_show_pct": 8
+        },
+        "revenue": {
+          "medicare_allowed_per_visit": 132,
+          "billing_mode": "in_house",
+          "outsourced_fee_pct": 6,
+          "claims_per_biller_per_month": 1600,
+          "denial_recovery_pct": 65
+        },
+        "payer_mix": [
+          {
+            "payer": "Commercial PPO",
+            "share_pct": 30,
+            "rate_pct_of_medicare": 135,
+            "denial_pct": 6,
+            "days_to_pay": 35
+          },
+          {
+            "payer": "Commercial HMO",
+            "share_pct": 15,
+            "rate_pct_of_medicare": 115,
+            "denial_pct": 9,
+            "days_to_pay": 40
+          },
+          {
+            "payer": "Medicare",
+            "share_pct": 30,
+            "rate_pct_of_medicare": 100,
+            "denial_pct": 5,
+            "days_to_pay": 20
+          },
+          {
+            "payer": "Medicaid",
+            "share_pct": 20,
+            "rate_pct_of_medicare": 70,
+            "denial_pct": 12,
+            "days_to_pay": 45
+          },
+          {
+            "payer": "Self-pay",
+            "share_pct": 5,
+            "rate_pct_of_medicare": 80,
+            "denial_pct": 35,
+            "days_to_pay": 60
+          }
+        ],
+        "overhead": {
+          "rent_per_month": 11000,
+          "software_per_provider_per_month": 650,
+          "malpractice_per_provider_per_year": 14000,
+          "supplies_per_visit": 9,
+          "marketing_per_month": 3000,
+          "other_fixed_per_month": 5000
+        },
+        "startup": {
+          "buildout_and_equipment": 380000,
+          "pre_opening_expenses": 90000,
+          "owner_equity": 400000,
+          "loan_amount": 950000,
+          "loan_annual_rate_pct": 8.5,
+          "loan_term_months": 84
+        }
+      }
+    },
+    {
+      "id": "pediatrics",
+      "name": "Pediatrics",
+      "summary": "Very high visit volume with a Medicaid-heavy payer mix. As configured, thin margins barely cover the loan: a good template for testing levers (payer contracts, no-shows, adding a provider). Seasonality is not modeled.",
+      "config": {
+        "name": "Neighborhood pediatrics",
+        "specialty": "pediatrics",
+        "months": 36,
+        "open_days_per_week": 5,
+        "exam_rooms": 7,
+        "visits_per_room_per_day": 16,
+        "providers": [
+          {
+            "role": "Pediatrician",
+            "count": 2,
+            "annual_salary": 230000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 26,
+            "start_month": 1
+          },
+          {
+            "role": "Pediatric NP",
+            "count": 1,
+            "annual_salary": 122000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 18,
+            "start_month": 4
+          }
+        ],
+        "staff": [
+          {
+            "role": "Medical assistant",
+            "count": 3,
+            "annual_salary": 41000,
+            "start_month": 1
+          },
+          {
+            "role": "Medical assistant",
+            "count": 2,
+            "annual_salary": 41000,
+            "start_month": 10
+          },
+          {
+            "role": "Front desk",
+            "count": 2,
+            "annual_salary": 38000,
+            "start_month": 1
+          },
+          {
+            "role": "Practice manager",
+            "count": 1,
+            "annual_salary": 76000,
+            "start_month": 1
+          },
+          {
+            "role": "Biller / coder",
+            "count": 1,
+            "annual_salary": 52000,
+            "start_month": 1
+          }
+        ],
+        "benefits_load_pct": 22,
+        "demand": {
+          "starting_panel": 800,
+          "new_patients_per_month": 300,
+          "ramp_months": 6,
+          "visits_per_patient_per_year": 3.6,
+          "annual_attrition_pct": 12,
+          "no_show_pct": 10
+        },
+        "revenue": {
+          "medicare_allowed_per_visit": 132,
+          "billing_mode": "in_house",
+          "outsourced_fee_pct": 6,
+          "claims_per_biller_per_month": 1800,
+          "denial_recovery_pct": 65
+        },
+        "payer_mix": [
+          {
+            "payer": "Commercial PPO",
+            "share_pct": 35,
+            "rate_pct_of_medicare": 130,
+            "denial_pct": 6,
+            "days_to_pay": 35
+          },
+          {
+            "payer": "Commercial HMO",
+            "share_pct": 15,
+            "rate_pct_of_medicare": 115,
+            "denial_pct": 9,
+            "days_to_pay": 40
+          },
+          {
+            "payer": "Medicaid / CHIP",
+            "share_pct": 45,
+            "rate_pct_of_medicare": 72,
+            "denial_pct": 11,
+            "days_to_pay": 45
+          },
+          {
+            "payer": "Self-pay",
+            "share_pct": 5,
+            "rate_pct_of_medicare": 80,
+            "denial_pct": 35,
+            "days_to_pay": 60
+          }
+        ],
+        "overhead": {
+          "rent_per_month": 12000,
+          "software_per_provider_per_month": 650,
+          "malpractice_per_provider_per_year": 12000,
+          "supplies_per_visit": 14,
+          "marketing_per_month": 2500,
+          "other_fixed_per_month": 5000
+        },
+        "startup": {
+          "buildout_and_equipment": 400000,
+          "pre_opening_expenses": 90000,
+          "owner_equity": 350000,
+          "loan_amount": 900000,
+          "loan_annual_rate_pct": 8.5,
+          "loan_term_months": 84
+        }
+      }
+    },
+    {
+      "id": "dermatology",
+      "name": "Dermatology",
+      "summary": "Mostly commercial, procedure-rich visits with a higher allowed amount per visit. Demand usually outruns capacity; rooms become the bottleneck.",
+      "config": {
+        "name": "Dermatology associates",
+        "specialty": "dermatology",
+        "months": 36,
+        "open_days_per_week": 5,
+        "exam_rooms": 6,
+        "visits_per_room_per_day": 12,
+        "providers": [
+          {
+            "role": "Dermatologist",
+            "count": 2,
+            "annual_salary": 430000,
+            "clinic_days_per_week": 4,
+            "visits_per_day": 30,
+            "start_month": 1
+          },
+          {
+            "role": "Physician assistant",
+            "count": 1,
+            "annual_salary": 135000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 24,
+            "start_month": 4
+          }
+        ],
+        "staff": [
+          {
+            "role": "Medical assistant",
+            "count": 6,
+            "annual_salary": 43000,
+            "start_month": 1
+          },
+          {
+            "role": "Front desk",
+            "count": 2,
+            "annual_salary": 40000,
+            "start_month": 1
+          },
+          {
+            "role": "Practice manager",
+            "count": 1,
+            "annual_salary": 85000,
+            "start_month": 1
+          },
+          {
+            "role": "Biller / coder",
+            "count": 1,
+            "annual_salary": 55000,
+            "start_month": 1
+          }
+        ],
+        "benefits_load_pct": 22,
+        "demand": {
+          "new_patients_per_month": 380,
+          "ramp_months": 6,
+          "visits_per_patient_per_year": 2.1,
+          "annual_attrition_pct": 20,
+          "no_show_pct": 6,
+          "starting_panel": 900
+        },
+        "revenue": {
+          "medicare_allowed_per_visit": 165,
+          "billing_mode": "outsourced",
+          "outsourced_fee_pct": 6,
+          "claims_per_biller_per_month": 1500,
+          "denial_recovery_pct": 70
+        },
+        "payer_mix": [
+          {
+            "payer": "Commercial PPO",
+            "share_pct": 45,
+            "rate_pct_of_medicare": 140,
+            "denial_pct": 7,
+            "days_to_pay": 35
+          },
+          {
+            "payer": "Commercial HMO",
+            "share_pct": 10,
+            "rate_pct_of_medicare": 120,
+            "denial_pct": 10,
+            "days_to_pay": 40
+          },
+          {
+            "payer": "Medicare",
+            "share_pct": 35,
+            "rate_pct_of_medicare": 100,
+            "denial_pct": 6,
+            "days_to_pay": 20
+          },
+          {
+            "payer": "Self-pay / cosmetic",
+            "share_pct": 10,
+            "rate_pct_of_medicare": 150,
+            "denial_pct": 5,
+            "days_to_pay": 1
+          }
+        ],
+        "overhead": {
+          "rent_per_month": 16000,
+          "software_per_provider_per_month": 700,
+          "malpractice_per_provider_per_year": 11000,
+          "supplies_per_visit": 22,
+          "marketing_per_month": 5000,
+          "other_fixed_per_month": 8000
+        },
+        "startup": {
+          "buildout_and_equipment": 520000,
+          "pre_opening_expenses": 110000,
+          "owner_equity": 600000,
+          "loan_amount": 1400000,
+          "loan_annual_rate_pct": 8.5,
+          "loan_term_months": 84
+        }
+      }
+    },
+    {
+      "id": "orthopedics",
+      "name": "Orthopedics (clinic only)",
+      "summary": "Referral-dependent specialty clinic with high salaries and a high allowed amount per visit. Surgical facility revenue is not modeled.",
+      "config": {
+        "name": "Orthopedic & sports clinic",
+        "specialty": "orthopedics",
+        "months": 36,
+        "open_days_per_week": 5,
+        "exam_rooms": 8,
+        "visits_per_room_per_day": 10,
+        "providers": [
+          {
+            "role": "Orthopedic surgeon",
+            "count": 2,
+            "annual_salary": 560000,
+            "clinic_days_per_week": 3,
+            "visits_per_day": 32,
+            "start_month": 1
+          },
+          {
+            "role": "Physician assistant",
+            "count": 2,
+            "annual_salary": 138000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 20,
+            "start_month": 1
+          }
+        ],
+        "staff": [
+          {
+            "role": "Medical assistant / tech",
+            "count": 6,
+            "annual_salary": 45000,
+            "start_month": 1
+          },
+          {
+            "role": "Radiology tech",
+            "count": 1,
+            "annual_salary": 68000,
+            "start_month": 1
+          },
+          {
+            "role": "Front desk / referrals",
+            "count": 3,
+            "annual_salary": 41000,
+            "start_month": 1
+          },
+          {
+            "role": "Practice manager",
+            "count": 1,
+            "annual_salary": 92000,
+            "start_month": 1
+          },
+          {
+            "role": "Biller / coder",
+            "count": 2,
+            "annual_salary": 56000,
+            "start_month": 1
+          }
+        ],
+        "benefits_load_pct": 22,
+        "demand": {
+          "new_patients_per_month": 340,
+          "ramp_months": 6,
+          "visits_per_patient_per_year": 3.0,
+          "annual_attrition_pct": 45,
+          "no_show_pct": 7,
+          "starting_panel": 700
+        },
+        "revenue": {
+          "medicare_allowed_per_visit": 205,
+          "billing_mode": "in_house",
+          "outsourced_fee_pct": 6,
+          "claims_per_biller_per_month": 1200,
+          "denial_recovery_pct": 65
+        },
+        "payer_mix": [
+          {
+            "payer": "Commercial PPO",
+            "share_pct": 40,
+            "rate_pct_of_medicare": 145,
+            "denial_pct": 8,
+            "days_to_pay": 38
+          },
+          {
+            "payer": "Commercial HMO",
+            "share_pct": 10,
+            "rate_pct_of_medicare": 120,
+            "denial_pct": 12,
+            "days_to_pay": 45
+          },
+          {
+            "payer": "Medicare",
+            "share_pct": 35,
+            "rate_pct_of_medicare": 100,
+            "denial_pct": 6,
+            "days_to_pay": 20
+          },
+          {
+            "payer": "Workers' comp",
+            "share_pct": 10,
+            "rate_pct_of_medicare": 125,
+            "denial_pct": 15,
+            "days_to_pay": 75
+          },
+          {
+            "payer": "Medicaid",
+            "share_pct": 5,
+            "rate_pct_of_medicare": 70,
+            "denial_pct": 12,
+            "days_to_pay": 45
+          }
+        ],
+        "overhead": {
+          "rent_per_month": 24000,
+          "software_per_provider_per_month": 750,
+          "malpractice_per_provider_per_year": 26000,
+          "supplies_per_visit": 18,
+          "marketing_per_month": 4000,
+          "other_fixed_per_month": 12000
+        },
+        "startup": {
+          "buildout_and_equipment": 850000,
+          "pre_opening_expenses": 160000,
+          "owner_equity": 1050000,
+          "loan_amount": 2300000,
+          "loan_annual_rate_pct": 8.5,
+          "loan_term_months": 84
+        }
+      }
+    },
+    {
+      "id": "behavioral_health",
+      "name": "Behavioral health / therapy",
+      "summary": "Low overhead, long appointments, very sticky patients. Capacity (clinician hours) is almost always the constraint; waitlists are common.",
+      "config": {
+        "name": "Counseling & psychiatry group",
+        "specialty": "behavioral_health",
+        "months": 36,
+        "open_days_per_week": 5,
+        "exam_rooms": 9,
+        "visits_per_room_per_day": 7,
+        "providers": [
+          {
+            "role": "Psychiatrist",
+            "count": 1,
+            "annual_salary": 320000,
+            "clinic_days_per_week": 4,
+            "visits_per_day": 14,
+            "start_month": 1
+          },
+          {
+            "role": "Licensed therapist (LCSW/LPC)",
+            "count": 4,
+            "annual_salary": 78000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 6.5,
+            "start_month": 1
+          },
+          {
+            "role": "Licensed therapist (LCSW/LPC)",
+            "count": 2,
+            "annual_salary": 78000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 6.5,
+            "start_month": 6
+          },
+          {
+            "role": "Psychiatric NP",
+            "count": 1,
+            "annual_salary": 140000,
+            "clinic_days_per_week": 4.5,
+            "visits_per_day": 12,
+            "start_month": 3
+          }
+        ],
+        "staff": [
+          {
+            "role": "Front desk / intake",
+            "count": 2,
+            "annual_salary": 40000,
+            "start_month": 1
+          },
+          {
+            "role": "Practice manager",
+            "count": 1,
+            "annual_salary": 72000,
+            "start_month": 1
+          }
+        ],
+        "benefits_load_pct": 20,
+        "demand": {
+          "new_patients_per_month": 90,
+          "ramp_months": 4,
+          "visits_per_patient_per_year": 14,
+          "annual_attrition_pct": 40,
+          "no_show_pct": 12,
+          "starting_panel": 150
+        },
+        "revenue": {
+          "medicare_allowed_per_visit": 148,
+          "billing_mode": "outsourced",
+          "outsourced_fee_pct": 7,
+          "claims_per_biller_per_month": 1800,
+          "denial_recovery_pct": 60
+        },
+        "payer_mix": [
+          {
+            "payer": "Commercial PPO",
+            "share_pct": 40,
+            "rate_pct_of_medicare": 110,
+            "denial_pct": 8,
+            "days_to_pay": 35
+          },
+          {
+            "payer": "Commercial HMO / EAP",
+            "share_pct": 15,
+            "rate_pct_of_medicare": 95,
+            "denial_pct": 12,
+            "days_to_pay": 45
+          },
+          {
+            "payer": "Medicare",
+            "share_pct": 15,
+            "rate_pct_of_medicare": 100,
+            "denial_pct": 6,
+            "days_to_pay": 20
+          },
+          {
+            "payer": "Medicaid",
+            "share_pct": 20,
+            "rate_pct_of_medicare": 75,
+            "denial_pct": 12,
+            "days_to_pay": 45
+          },
+          {
+            "payer": "Self-pay",
+            "share_pct": 10,
+            "rate_pct_of_medicare": 120,
+            "denial_pct": 8,
+            "days_to_pay": 1
+          }
+        ],
+        "overhead": {
+          "rent_per_month": 7500,
+          "software_per_provider_per_month": 300,
+          "malpractice_per_provider_per_year": 3000,
+          "supplies_per_visit": 1,
+          "marketing_per_month": 2000,
+          "other_fixed_per_month": 4000
+        },
+        "startup": {
+          "buildout_and_equipment": 120000,
+          "pre_opening_expenses": 60000,
+          "owner_equity": 300000,
+          "loan_amount": 600000,
+          "loan_annual_rate_pct": 8.5,
+          "loan_term_months": 60
+        }
+      }
+    },
+    {
+      "id": "urgent_care",
+      "name": "Urgent care",
+      "summary": "Walk-in, extended-hours model with fast rooms and heavy marketing. Brand awareness (ramp) drives the timeline to break-even.",
+      "config": {
+        "name": "Walk-in urgent care",
+        "specialty": "urgent_care",
+        "months": 36,
+        "open_days_per_week": 7,
+        "exam_rooms": 7,
+        "visits_per_room_per_day": 12,
+        "providers": [
+          {
+            "role": "Emergency / FM physician",
+            "count": 2,
+            "annual_salary": 285000,
+            "clinic_days_per_week": 3.5,
+            "visits_per_day": 34,
+            "start_month": 1
+          },
+          {
+            "role": "Physician assistant / NP",
+            "count": 3,
+            "annual_salary": 132000,
+            "clinic_days_per_week": 3.5,
+            "visits_per_day": 28,
+            "start_month": 1
+          }
+        ],
+        "staff": [
+          {
+            "role": "Medical assistant",
+            "count": 6,
+            "annual_salary": 41000,
+            "start_month": 1
+          },
+          {
+            "role": "Radiology tech",
+            "count": 2,
+            "annual_salary": 66000,
+            "start_month": 1
+          },
+          {
+            "role": "Front desk",
+            "count": 4,
+            "annual_salary": 38000,
+            "start_month": 1
+          },
+          {
+            "role": "Clinic manager",
+            "count": 1,
+            "annual_salary": 82000,
+            "start_month": 1
+          }
+        ],
+        "benefits_load_pct": 22,
+        "demand": {
+          "new_patients_per_month": 1200,
+          "ramp_months": 12,
+          "visits_per_patient_per_year": 0.6,
+          "annual_attrition_pct": 50,
+          "no_show_pct": 0,
+          "starting_panel": 0
+        },
+        "revenue": {
+          "medicare_allowed_per_visit": 140,
+          "billing_mode": "outsourced",
+          "outsourced_fee_pct": 6,
+          "claims_per_biller_per_month": 1800,
+          "denial_recovery_pct": 65
+        },
+        "payer_mix": [
+          {
+            "payer": "Commercial PPO",
+            "share_pct": 45,
+            "rate_pct_of_medicare": 135,
+            "denial_pct": 7,
+            "days_to_pay": 35
+          },
+          {
+            "payer": "Commercial HMO",
+            "share_pct": 10,
+            "rate_pct_of_medicare": 115,
+            "denial_pct": 10,
+            "days_to_pay": 40
+          },
+          {
+            "payer": "Medicare",
+            "share_pct": 15,
+            "rate_pct_of_medicare": 100,
+            "denial_pct": 5,
+            "days_to_pay": 20
+          },
+          {
+            "payer": "Medicaid",
+            "share_pct": 18,
+            "rate_pct_of_medicare": 70,
+            "denial_pct": 12,
+            "days_to_pay": 45
+          },
+          {
+            "payer": "Self-pay",
+            "share_pct": 12,
+            "rate_pct_of_medicare": 90,
+            "denial_pct": 20,
+            "days_to_pay": 1
+          }
+        ],
+        "overhead": {
+          "rent_per_month": 18000,
+          "software_per_provider_per_month": 550,
+          "malpractice_per_provider_per_year": 13000,
+          "supplies_per_visit": 16,
+          "marketing_per_month": 9000,
+          "other_fixed_per_month": 10000
+        },
+        "startup": {
+          "buildout_and_equipment": 750000,
+          "pre_opening_expenses": 150000,
+          "owner_equity": 1150000,
+          "loan_amount": 2050000,
+          "loan_annual_rate_pct": 8.5,
+          "loan_term_months": 84
+        }
+      }
+    }
+  ]
+}

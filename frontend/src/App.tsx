@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import Family from "./pages/Family";
 import Expenses from "./pages/Expenses";
 import Results from "./pages/Results";
+import Practice from "./pages/Practice";
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const { user, loading } = useAuth();
@@ -63,6 +64,14 @@ export default function App() {
             element={
               <RequireAuth>
                 <Results />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/practice"
+            element={
+              <RequireAuth>
+                <Practice />
               </RequireAuth>
             }
           />

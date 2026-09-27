@@ -7,6 +7,7 @@ from sqlalchemy import (
     Float,
     ForeignKey,
     Integer,
+    JSON,
     String,
     Text,
 )
@@ -29,6 +30,9 @@ class User(Base):
     )
     documents = relationship(
         "Document", back_populates="owner", cascade="all, delete-orphan"
+    )
+    practices = relationship(
+        "Practice", back_populates="owner", cascade="all, delete-orphan"
     )
 
 
@@ -109,3 +113,23 @@ class Expense(Base):
     incurred_on = Column(String, nullable=True)  # free-text date from source data
 
     document = relationship("Document", back_populates="expenses")
+
+
+class Practice(Base):
+    """A saved practice design for the builder/simulator.
+
+    The whole design is one JSON document (validated by schemas.PracticeConfig)
+    rather than normalized tables: it is always loaded and simulated as a unit,
+    and new inputs can be added without a migration.
+    """
+
+    __tablename__ = "practices"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    name = Column(String, nullable=False)
+    config = Column(JSON, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    owner = relationship("User", back_populates="practices")

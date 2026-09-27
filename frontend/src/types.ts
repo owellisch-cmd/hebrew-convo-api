@@ -117,3 +117,166 @@ export interface RecommendationResponse {
   matched_pathways: MatchedPathway[];
   projected_pathway_cost: number;
 }
+
+// ---- Practice builder & simulator ----
+
+export interface ProviderInput {
+  role: string;
+  count: number;
+  annual_salary: number;
+  clinic_days_per_week: number;
+  visits_per_day: number;
+  start_month: number;
+}
+
+export interface StaffInput {
+  role: string;
+  count: number;
+  annual_salary: number;
+  start_month: number;
+}
+
+export interface PayerInput {
+  payer: string;
+  share_pct: number;
+  rate_pct_of_medicare: number;
+  denial_pct: number;
+  days_to_pay: number;
+}
+
+export interface PracticeConfig {
+  name: string;
+  specialty: string;
+  months: number;
+  open_days_per_week: number;
+  exam_rooms: number;
+  visits_per_room_per_day: number;
+  providers: ProviderInput[];
+  staff: StaffInput[];
+  benefits_load_pct: number;
+  demand: {
+    starting_panel: number;
+    new_patients_per_month: number;
+    ramp_months: number;
+    visits_per_patient_per_year: number;
+    annual_attrition_pct: number;
+    no_show_pct: number;
+  };
+  revenue: {
+    medicare_allowed_per_visit: number;
+    billing_mode: "in_house" | "outsourced";
+    outsourced_fee_pct: number;
+    claims_per_biller_per_month: number;
+    denial_recovery_pct: number;
+  };
+  payer_mix: PayerInput[];
+  overhead: {
+    rent_per_month: number;
+    software_per_provider_per_month: number;
+    malpractice_per_provider_per_year: number;
+    supplies_per_visit: number;
+    marketing_per_month: number;
+    other_fixed_per_month: number;
+  };
+  startup: {
+    buildout_and_equipment: number;
+    pre_opening_expenses: number;
+    owner_equity: number;
+    loan_amount: number;
+    loan_annual_rate_pct: number;
+    loan_term_months: number;
+  };
+}
+
+export interface PracticeTemplate {
+  id: string;
+  name: string;
+  summary: string;
+  config: PracticeConfig;
+}
+
+export interface SavedPractice {
+  id: number;
+  name: string;
+  config: PracticeConfig;
+  updated_at: string | null;
+}
+
+export interface SimMonth {
+  month: number;
+  active_patients: number;
+  new_patients: number;
+  turned_away: number;
+  capacity_visits: number;
+  completed_visits: number;
+  utilization_pct: number;
+  billed: number;
+  collections: number;
+  payroll: number;
+  occupancy: number;
+  other_expenses: number;
+  total_expenses: number;
+  operating_income: number;
+  debt_service: number;
+  net_cash_flow: number;
+  cash_balance: number;
+  accounts_receivable: number;
+  days_in_ar: number;
+}
+
+export interface SimYear {
+  year: number;
+  visits: number;
+  collections: number;
+  expenses: number;
+  operating_income: number;
+  net_cash_flow: number;
+  operating_margin_pct: number;
+}
+
+export interface SimPayer {
+  payer: string;
+  share_pct: number;
+  net_per_visit: number;
+  visits: number;
+  collections: number;
+  lost_to_denials: number;
+}
+
+export interface SimInsight {
+  severity: "blocking" | "high" | "medium" | "low" | "good";
+  title: string;
+  detail: string;
+}
+
+export interface SensitivityRow {
+  driver: string;
+  low_label: string;
+  high_label: string;
+  low_value: number;
+  high_value: number;
+}
+
+export interface SimulationResult {
+  summary: {
+    starting_cash: number;
+    operating_breakeven_month: number | null;
+    cash_payback_month: number | null;
+    lowest_cash: number;
+    lowest_cash_month: number;
+    ending_cash: number;
+    steady_state_visits_per_month: number;
+    steady_state_utilization_pct: number;
+    steady_state_collections_per_month: number;
+    steady_state_operating_margin_pct: number;
+    net_collection_per_visit: number;
+    overhead_ratio_pct: number;
+    bottleneck: "demand" | "providers" | "rooms";
+    final_year_operating_income: number;
+  };
+  months: SimMonth[];
+  years: SimYear[];
+  payers: SimPayer[];
+  insights: SimInsight[];
+  sensitivity: SensitivityRow[];
+}

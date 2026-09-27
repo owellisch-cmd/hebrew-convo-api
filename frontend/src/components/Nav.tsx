@@ -19,6 +19,7 @@ export default function Nav() {
           <NavLink to="/family">Family</NavLink>
           <NavLink to="/expenses">Medical Expenses</NavLink>
           <NavLink to="/results">Recommendation</NavLink>
+          <NavLink to="/practice">Practice Simulator</NavLink>
           <span className="muted">{user.full_name}</span>
           <button className="secondary" onClick={logout}>
             Log out

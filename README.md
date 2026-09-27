@@ -54,6 +54,36 @@ ranks it first; PlanWise ranks it last.
   numbers into a short explanation of why the recommended plan fits this
   family. Falls back to a templated explanation if no API key is configured.
 
+## Practice builder & simulator
+
+The rest of PlanWise looks at care from the patient's side. The **Practice
+Simulator** page (`/practice`) looks from the provider's side: design an
+outpatient practice and simulate its first years month by month.
+
+- **Build** from one of six specialty templates (family medicine, pediatrics,
+  dermatology, orthopedics, behavioral health, urgent care) or from scratch:
+  providers (count, salary, clinic days, visits/day, start month), support
+  staff, exam rooms, patient demand and ramp-up, payer mix (share, rate as % of
+  Medicare, denial rate, days to pay), billing model, overhead, and startup
+  financing. Designs can be saved per user.
+- **Simulate** (`backend/app/services/practice_sim.py`): each month, new
+  patients arrive and join a panel that churns and returns for visits;
+  capacity is the lesser of provider time and exam rooms, minus no-shows;
+  every visit is billed through the payer mix and paid after that payer's lag,
+  with denied claims partly recovered later (less so when in-house billers are
+  overloaded). Payroll, overhead and loan payments come out of cash.
+- **Results** re-run on every edit: break-even month, cash trough (the
+  number a lender cares about), steady-state margin, the binding constraint
+  (demand, providers or rooms), findings with suggested levers, a sensitivity
+  chart showing which inputs move final-year income most, and yearly, payer and
+  month-by-month tables.
+
+Template numbers in `backend/app/data/practice_templates.json` are
+illustrative. Replace them with local salaries, rent quotes, real payer
+contracts and a market study before relying on a projection. Not modeled:
+seasonality, provider productivity ramp-up, taxes, owner draws, and
+facility/ancillary revenue.
+
 ## Scope and limitations — read before relying on this
 
 - **This is a planning estimate, not a quote.** Unit costs (cost per doctor
@@ -104,18 +134,20 @@ backend/   FastAPI + SQLAlchemy (SQLite by default) + JWT auth
   app/
     models.py           SQLAlchemy tables
     schemas.py           Pydantic request/response models
-    routers/              auth, family, expenses, plans, recommend
+    routers/              auth, family, expenses, plans, recommend, practice
     services/
       parsing.py          CSV/PDF expense parser
       pathways.py          condition -> care pathway matching + access scoring
+      practice_sim.py      medical practice builder/simulator engine
       recommendation.py    cost simulation engine (access-aware)
       llm.py                Claude explanation (claude-opus-5)
     data/plans.json          sample plans + access attributes
     data/care_pathways.json  modeled care pathways per condition
+    data/practice_templates.json  specialty starting points for the simulator
 
 frontend/  React + TypeScript + Vite
   src/
-    pages/    Login, Register, Family, Expenses, Results
+    pages/    Login, Register, Family, Expenses, Results, Practice
     api/      axios client with JWT attached
     context/  auth state
 ```
